@@ -60,15 +60,16 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
         num_faces = bounding_box.detectMultiScale(
             gray_frame, scaleFactor=1.3, minNeighbors=5)        
         
-        for (x, y, w, h) in num_faces:
-            roi_gray_frame = gray_frame[y:y + h, x:x + w]
-            cropped_img = np.expand_dims(np.expand_dims(
-                cv2.resize(roi_gray_frame, (48, 48)), -1), 0)
-            emotion_prediction = emotion_model.predict(cropped_img)
-            maxindex = int(np.argmax(emotion_prediction))
-        # Make Emotion Detections
-        emotion_prediction = str(emotion_dict[maxindex])
-        emotion_prediction_list.append(emotion_prediction)
+        if len(num_faces) > 0:
+            for (x, y, w, h) in num_faces:
+                roi_gray_frame = gray_frame[y:y + h, x:x + w]
+                cropped_img = np.expand_dims(np.expand_dims(
+                    cv2.resize(roi_gray_frame, (48, 48)), -1), 0)
+                emotion_prediction = emotion_model.predict(cropped_img)
+                maxindex = int(np.argmax(emotion_prediction))
+            # Make Emotion Detections
+            emotion_prediction = str(emotion_dict[maxindex])
+            emotion_prediction_list.append(emotion_prediction)
 
         results = holistic.process(frame)
         
