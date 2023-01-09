@@ -22,4 +22,4 @@ Also its analysis interaction and emotions.
   
 ## Demo
 
-Link is coming soon
+https://www.youtube.com/watch?v=1jyuxrmkxb8
